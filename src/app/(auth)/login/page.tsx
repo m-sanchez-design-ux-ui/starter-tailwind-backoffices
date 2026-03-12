@@ -159,7 +159,7 @@ export default function LoginPage() {
       </main>
 
       {/* Footer */}
-      <footer className="flex justify-center bg-gray-200 dark:bg-gray-900 w-full z-10 py-2 border-t border-gray-300 dark:border-gray-800">
+      <footer className="flex justify-center bg-gray-200 dark:bg-gray-900 w-full py-2 border-t border-gray-300 dark:border-gray-800">
         <div className="w-full text-gray-900 dark:text-gray-100 font-medium flex items-center justify-center">
           <span className="text-sm mr-3 border-r border-r-gray-900 dark:border-r-gray-100 pr-3">
             BackOffice © 2026
