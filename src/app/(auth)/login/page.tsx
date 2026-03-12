@@ -37,13 +37,16 @@ export default function LoginPage() {
   return (
     <>
       <main className="bg-white w-full h-[calc(100vh-36px)] lg:h-screen p-8 flex flex-col items-center dark:bg-gray-900 font-sans">
-        {/* Decorative Elements */}
+        {/* Elements Top Start */}
         <div className="absolute top-0 left-0 hidden lg:block h-10">
           <div className="w-32 h-32 2xl:w-48 2xl:h-48 absolute top-14 left-24 2xl:top-16 rounded-full bg-blue-600 dark:bg-blue-500 opacity-10"></div>
           <div className="flex w-44 h-44 2xl:w-56 2xl:h-56 rounded-none rounded-br-full bg-blue-600 dark:bg-blue-500 opacity-15"></div>
         </div>
+        {/* Elements Top End */}
 
+        {/* Container Start */}
         <div className="flex flex-col items-center gap-3 2xl:gap-6 h-fit my-auto">
+          {/* Logo Client Start */}
           <Image
             className="w-fit h-8 2xl:h-12"
             src="/images/logos/logo_client.svg"
@@ -52,7 +55,9 @@ export default function LoginPage() {
             height={48}
             priority
           />
-        
+          {/* Logo Client End */}
+
+          {/* Container Inner Start */}
           <section className="bg-white p-4 xl:p-8 rounded-xl transition-shadow duration-300 shadow hover:shadow-lg border border-gray-200 w-full max-w-96">
             <div className="mb-3">
               <h1 className="text-xl font-semibold text-gray-700 mb-1.5 dark:text-white text-center">
@@ -139,13 +144,17 @@ export default function LoginPage() {
               </div>
             </form>
           </section>
+          {/* Container Inner End */}
+          
         </div>
+        {/* Container End */}
 
-        {/* Bottom Decorative Elements */}
+        {/* Elements Bottom Start */}
         <div className="absolute bottom-0 right-0 hidden lg:block rotate-180">
           <div className="w-32 h-32 2xl:w-48 2xl:h-48 absolute top-14 left-24 2xl:top-16 rounded-full bg-blue-600 dark:bg-blue-500 opacity-10"></div>
           <div className="flex w-44 h-44 2xl:w-56 2xl:h-56 rounded-none rounded-br-full bg-blue-600 dark:bg-blue-500 opacity-15"></div>
         </div>
+        {/* Elements Bottom End */}
       </main>
 
       {/* Footer */}
