@@ -36,7 +36,8 @@ export default function LoginPage() {
 
   return (
     <>
-      <main className="bg-white w-full h-[calc(100vh-36px)] lg:h-screen p-8 flex flex-col items-center dark:bg-gray-900 font-sans">
+      {/* Page */}
+      <main className="bg-white w-full min-h-[calc(100vh-37px)] p-8 flex flex-col items-center dark:bg-gray-900 font-sans">
         {/* Elements Top Start */}
         <div className="absolute top-0 left-0 hidden lg:block h-10">
           <div className="w-32 h-32 2xl:w-48 2xl:h-48 absolute top-14 left-24 2xl:top-16 rounded-full bg-blue-600 dark:bg-blue-500 opacity-10"></div>
@@ -45,7 +46,7 @@ export default function LoginPage() {
         {/* Elements Top End */}
 
         {/* Container Start */}
-        <div className="flex flex-col items-center gap-3 2xl:gap-6 h-fit my-auto">
+        <div className="w-full max-w-96 flex flex-col items-center gap-3 2xl:gap-6 h-fit my-auto">
           {/* Logo Client Start */}
           <Image
             className="w-fit h-8 2xl:h-12"
@@ -58,7 +59,7 @@ export default function LoginPage() {
           {/* Logo Client End */}
 
           {/* Card Start */}
-          <section className="bg-white p-4 xl:p-8 rounded-xl transition-shadow duration-300 shadow hover:shadow-lg border border-gray-200 w-full max-w-96">
+          <section className="w-full bg-white p-4 xl:p-8 rounded-xl transition-shadow duration-300 shadow hover:shadow-lg border border-gray-200">
             <div className="mb-3">
               <h1 className="text-xl font-semibold text-gray-700 mb-1.5 dark:text-white text-center">
                 ¡Te damos la bienvenida!
@@ -158,7 +159,7 @@ export default function LoginPage() {
       </main>
 
       {/* Footer */}
-      <footer className="flex justify-center bg-gray-200 dark:bg-gray-900 absolute bottom-0 w-full z-10 py-2 border-t border-gray-300 dark:border-gray-800">
+      <footer className="flex justify-center bg-gray-200 dark:bg-gray-900 w-full z-10 py-2 border-t border-gray-300 dark:border-gray-800">
         <div className="w-full text-gray-900 dark:text-gray-100 font-medium flex items-center justify-center">
           <span className="text-sm mr-3 border-r border-r-gray-900 dark:border-r-gray-100 pr-3">
             BackOffice © 2026
