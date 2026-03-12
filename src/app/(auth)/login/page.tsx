@@ -57,7 +57,7 @@ export default function LoginPage() {
           />
           {/* Logo Client End */}
 
-          {/* Container Inner Start */}
+          {/* Card Start */}
           <section className="bg-white p-4 xl:p-8 rounded-xl transition-shadow duration-300 shadow hover:shadow-lg border border-gray-200 w-full max-w-96">
             <div className="mb-3">
               <h1 className="text-xl font-semibold text-gray-700 mb-1.5 dark:text-white text-center">
@@ -144,8 +144,8 @@ export default function LoginPage() {
               </div>
             </form>
           </section>
-          {/* Container Inner End */}
-          
+          {/* Card End */}
+
         </div>
         {/* Container End */}
 
