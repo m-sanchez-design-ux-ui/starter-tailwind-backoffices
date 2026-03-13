@@ -22,9 +22,11 @@ export default function DashboardPage() {
 
   return (
     <div className="flex flex-col gap-6">
-      
+
       {/*Breadcrumb */}
-      <Breadcrumb items={BREADCRUMB_CONFIG} />
+      <div className="flex flex-row flex-wrap justify-between items-center w-full mb-4 gap-4">
+        <Breadcrumb items={BREADCRUMB_CONFIG} />
+      </div>
 
       {/* ROW: 4 Blocks */}
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
@@ -33,17 +35,17 @@ export default function DashboardPage() {
         ))}
       </div>
 
-      {/* MIDDLE ROW: Main Content Block */}
+      {/* Middle Row: Main Content Block */}
       <div className="h-96 bg-gray-50 dark:bg-gray-900/50 border-2 border-dashed border-gray-200 dark:border-gray-800 rounded-xl flex items-center justify-center">
       </div>
 
-      {/* BOTTOM ROW: 2 Column Blocks */}
+      {/* Bottom Row: 2 Column Blocks */}
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
         <div className="h-64 bg-gray-50 dark:bg-gray-900/50 border-2 border-dashed border-gray-200 dark:border-gray-800 rounded-xl"></div>
         <div className="h-64 bg-gray-50 dark:bg-gray-900/50 border-2 border-dashed border-gray-200 dark:border-gray-800 rounded-xl"></div>
       </div>
 
-      {/* MIDDLE ROW: Main Content Block */}
+      {/* Middle Row: Main Content Block */}
       <div className="h-96 bg-gray-50 dark:bg-gray-900/50 border-2 border-dashed border-gray-200 dark:border-gray-800 rounded-xl flex items-center justify-center">
       </div>
 
