@@ -31,18 +31,18 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
     <>
       <FlowbiteInit />
       <div className={`${montserrat.variable} antialiased flex h-screen w-full bg-white dark:bg-gray-950 text-gray-900 dark:text-gray-100`}>
-        {/* SIDEBAR: Bloque fijo a la izquierda */}
+        {/* Backoffice Menu */}
         <Sidebar />
 
-        {/* CONTENEDOR DERECHO */}
+        {/* Right Content Area */}
         <div className="flex flex-col flex-1 min-w-0 overflow-hidden">
           
-          {/* HEADER: Navbar superior */}
+          {/* Top Navbar */}
           <Header />
 
-          {/* ÁREA DE CONTENIDO: Con scroll vertical independiente */}
-          <main className="flex-1 overflow-y-auto p-6 md:p-8 bg-white dark:bg-gray-950">
-            <div className="max-w-350 mx-auto">
+          {/* Content Area with vertical scroll */}
+          <main className="flex-1 overflow-y-auto px-7 py-4 lg:pl-71 bg-white dark:bg-gray-950">
+            <div className="max-w-full mx-auto">
               {children}
             </div>
           </main>

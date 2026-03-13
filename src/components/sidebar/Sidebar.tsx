@@ -13,7 +13,7 @@ export default function Sidebar() {
   });
 
   return (
-    <aside className="w-64 h-screen transition-transform -translate-x-full lg:translate-x-0 border-r border-gray-200 dark:border-gray-600 dark:bg-gray-950 bg-white">
+    <aside className="fixed top-0 left-0 z-40 w-64 h-screen transition-transform -translate-x-full lg:translate-x-0 border-r border-gray-200 dark:border-gray-600 dark:bg-gray-950 bg-white">
       <div className="h-full flex flex-col justify-between overflow-y-auto">
         
         {/* Header con Logo Optimizado */}
