@@ -5,7 +5,13 @@ import Link from "next/link";
 import { LayoutDashboard, Box, HelpCircle, ChevronDown, BarChart2 } from "lucide-react";
 import { SidebarItem } from "./SidebarItem";
 
-export default function Sidebar() {
+interface SidebarProps {
+  isOpen: boolean;
+  onClose: () => void;
+}
+
+export default function Sidebar({ isOpen, onClose }: SidebarProps) {
+
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
   const [selectedClient, setSelectedClient] = useState({
     name: "Opción 01",
@@ -13,9 +19,8 @@ export default function Sidebar() {
   });
 
   return (
-    <aside className="fixed top-0 left-0 z-40 w-64 h-screen transition-transform -translate-x-full lg:translate-x-0 border-r border-gray-200 dark:border-gray-600 dark:bg-gray-950 bg-white">
+    <aside className={`fixed top-0 left-0 z-40 w-64 h-screen border-r border-gray-200 dark:border-gray-600 dark:bg-gray-950 bg-white transition-transform ${isOpen ? "translate-x-0" : "-translate-x-full"} lg:translate-x-0`}>
       <div className="h-full flex flex-col justify-between overflow-y-auto">
-        
         {/* Header con Logo Optimizado */}
         <div className="p-3 h-17 sticky top-0 z-10 flex justify-center items-center bg-inherit">
           <Link href="/dashboard" className="relative w-full h-8">
