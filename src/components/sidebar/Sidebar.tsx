@@ -8,10 +8,9 @@ import { SidebarItemWithDropdown } from "./SidebarItemWithDropdown";
 
 interface SidebarProps {
   isOpen: boolean;
-  onClose: () => void;
 }
 
-export default function Sidebar({ isOpen, onClose }: SidebarProps) {
+export default function Sidebar({ isOpen }: SidebarProps) {
 
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
   const [selectedClient, setSelectedClient] = useState({
