@@ -1,6 +1,10 @@
 import { Home, Package } from 'lucide-react';
 import Breadcrumb, { BreadcrumbItem } from "@/components/Breadcrumb";
 
+const GridBox = () => (
+  <div className="border-2 border-dashed border-gray-300 rounded-lg dark:border-gray-600 min-h-32 md:min-h-48 transition-colors hover:border-primary/50" />
+);
+
 export default function DashboardPage() {
 
   const BREADCRUMB_CONFIG: BreadcrumbItem[] = [
@@ -28,34 +32,53 @@ export default function DashboardPage() {
         <Breadcrumb items={BREADCRUMB_CONFIG} />
       </div>
 
-      {/* ROW: 4 Blocks */}
-      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
-        {[1, 2, 3, 4].map((i) => (
-          <div key={i} className="h-32 bg-gray-50 dark:bg-gray-900/50 border-2 border-dashed border-gray-200 dark:border-gray-800 rounded-xl"></div>
-        ))}
-      </div>
+      {/* Title Page Container */}
+      <h3 className="text-xl 2xl:text-2xl text-gray-900 dark:text-gray-100 font-semibold w-full py-4">
+        Grids
+      </h3>
 
-      {/* Middle Row: Main Content Block */}
-      <div className="h-96 bg-gray-50 dark:bg-gray-900/50 border-2 border-dashed border-gray-200 dark:border-gray-800 rounded-xl flex items-center justify-center">
-      </div>
+      {/* Grids Start */}
 
-      {/* Bottom Row: 2 Column Blocks */}
-      <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
-        <div className="h-64 bg-gray-50 dark:bg-gray-900/50 border-2 border-dashed border-gray-200 dark:border-gray-800 rounded-xl"></div>
-        <div className="h-64 bg-gray-50 dark:bg-gray-900/50 border-2 border-dashed border-gray-200 dark:border-gray-800 rounded-xl"></div>
-      </div>
+        {/* Full 5 col */}
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-4 mb-4">
+          <GridBox />
+          <GridBox />
+          <GridBox />
+          <GridBox />
+          <GridBox />
+        </div>
 
-      {/* Middle Row: Main Content Block */}
-      <div className="h-96 bg-gray-50 dark:bg-gray-900/50 border-2 border-dashed border-gray-200 dark:border-gray-800 rounded-xl flex items-center justify-center">
-      </div>
+        {/* Full 4 col and 2 row */}
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 mb-4">
+          <GridBox />
+          <GridBox />
+          <GridBox />
+          <GridBox />
+        </div>
 
-      {/* ROW: 4 Blocks */}
-      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
-        {[1, 2, 3, 4].map((i) => (
-          <div key={i} className="h-32 bg-gray-50 dark:bg-gray-900/50 border-2 border-dashed border-gray-200 dark:border-gray-800 rounded-xl"></div>
-        ))}
-      </div>
-      
+        {/* Full 3 col and 2 row */}
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 mb-4">
+          <GridBox />
+          <GridBox />
+          <GridBox />
+          <GridBox />
+          <GridBox />
+          <GridBox />
+        </div>
+
+        {/* Full 2 col and 2 row */}
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-4">
+          <GridBox />
+          <GridBox />
+          <GridBox />
+          <GridBox />
+        </div>
+
+        {/* Full Row */}
+        <div className="border-2 border-dashed rounded-lg border-gray-300 min-h-32 md:min-h-48 mb-4 dark:border-gray-600 transition-colors hover:border-primary/50" />
+
+      {/* Grids End */}
+
     </div>
   );
 }
