@@ -4,6 +4,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { LayoutDashboard, Box, HelpCircle, ChevronDown, BarChart2 } from "lucide-react";
 import { SidebarItem } from "./SidebarItem";
+import { SidebarItemWithDropdown } from "./SidebarItemWithDropdown";
 
 interface SidebarProps {
   isOpen: boolean;
@@ -83,11 +84,18 @@ export default function Sidebar({ isOpen, onClose }: SidebarProps) {
               label="Dashboard" 
               icon={<LayoutDashboard className="size-6" />} 
             />
-            <SidebarItem 
-              href="/starter-kit" 
-              label="Starter Kit" 
-              icon={<Box className="size-6" />} 
+
+            {/* Dropdown de Starter Kit */}
+            <SidebarItemWithDropdown 
+              label="Starter kit"
+              rootHref="/starter-kit"
+              icon={<Box className="size-6" />}
+              items={[
+                { label: "Components", href: "/starter-kit/template-components" },
+                { label: "Cards", href: "/starter-kit/template-cards" },
+                { label: "Grids", href: "/starter-kit/grids" },              ]}
             />
+
             <SidebarItem 
               href="#" 
               label="Disabled" 
