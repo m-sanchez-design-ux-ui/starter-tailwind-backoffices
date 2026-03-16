@@ -2,7 +2,7 @@
 import { useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
-import { LayoutDashboard, Box, HelpCircle, ChevronDown, BarChart2 } from "lucide-react";
+import { LayoutDashboard, Box, HelpCircle, ChevronDown, ChartColumnIncreasing } from "lucide-react";
 import { SidebarItem } from "./SidebarItem";
 import { SidebarItemWithDropdown } from "./SidebarItemWithDropdown";
 
@@ -15,8 +15,8 @@ export default function Sidebar({ isOpen, onClose }: SidebarProps) {
 
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
   const [selectedClient, setSelectedClient] = useState({
-    name: "Opción 01",
-    img: "/images/cover/cover-default.svg"
+    name: "Seleccionar...",
+    img: "/images/icon-btns/picture.svg"
   });
 
   return (
@@ -58,6 +58,7 @@ export default function Sidebar({ isOpen, onClose }: SidebarProps) {
           {isDropdownOpen && (
             <ul className="absolute left-3 right-3 z-50 bg-white border border-gray-300 shadow-md rounded-lg mt-1 p-2 dark:bg-gray-700 animate-in fade-in zoom-in-95 duration-100">
               {[
+                { name: 'Seleccionar...', img: '/images/icon-btns/picture.svg' },
                 { name: 'Opción 01', img: '/images/cover/cover-default.svg' },
                 { name: 'Opción 02', img: '/images/cover/cover-default.svg' }
               ].map((opt) => (
@@ -80,7 +81,7 @@ export default function Sidebar({ isOpen, onClose }: SidebarProps) {
         <nav className="flex-1 px-0 py-4">
           <ul className="space-y-1">
             <SidebarItem 
-              href="/dashboard" 
+              href="/" 
               label="Dashboard" 
               icon={<LayoutDashboard className="size-6" />} 
             />
@@ -88,19 +89,18 @@ export default function Sidebar({ isOpen, onClose }: SidebarProps) {
             {/* Dropdown de Starter Kit */}
             <SidebarItemWithDropdown 
               label="Starter kit"
-              rootHref="/starter-kit"
+              rootHref="/"
               icon={<Box className="size-6" />}
               items={[
-                { label: "Components", href: "/starter-kit/template-components" },
-                { label: "Cards", href: "/starter-kit/template-cards" },
-                { label: "Grids", href: "/starter-kit/grids" },              ]}
+                { label: "Grids", href: "/grids" },              
+              ]}
             />
 
             <SidebarItem 
               href="#" 
               label="Disabled" 
               disabled 
-              icon={<BarChart2 className="size-6" />} 
+              icon={<ChartColumnIncreasing className="size-6" />} 
             />
             
             <div className="my-4 border-b border-gray-200 dark:border-gray-600 mx-4" />

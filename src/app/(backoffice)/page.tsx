@@ -1,4 +1,4 @@
-import { Home, Package } from 'lucide-react';
+import { LayoutDashboard } from 'lucide-react';
 import Breadcrumb, { BreadcrumbItem } from "@/components/Breadcrumb";
 
 const GridBox = () => (
@@ -7,20 +7,22 @@ const GridBox = () => (
 
 export default function DashboardPage() {
 
+  // Force an error to test the error page
+  //throw new Error("Error Server Simulation");
+
   const BREADCRUMB_CONFIG: BreadcrumbItem[] = [
     { 
       text: 'Dashboard', 
-      href: '/dashboard', 
-      icon: <Home className="size-4" /> 
+      href: '/', 
+      icon: <LayoutDashboard className="size-4" /> 
     },
     { 
-      text: 'Gestión de Productos', 
-      href: '/dashboard/products', 
-      icon: <Package className="size-4" /> 
+      text: 'Text...', 
+      href: '/', 
     },
     { 
-      text: 'Configuración de Stock', 
-      href: '/dashboard/products/stock' 
+      text: 'Text...', 
+      href: '', 
     },
   ];
 
@@ -34,7 +36,7 @@ export default function DashboardPage() {
 
       {/* Title Page Container */}
       <h3 className="text-xl 2xl:text-2xl text-gray-900 dark:text-gray-100 font-semibold w-full py-4">
-        Grids
+        Dashboard
       </h3>
 
       {/* Grids Start */}

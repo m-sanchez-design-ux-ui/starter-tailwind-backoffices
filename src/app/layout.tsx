@@ -15,7 +15,6 @@ export default function RootLayout({
   return (
     <html lang="es">
       <body className="font-sans antialiased">
-        {/* Inicializador de Flowbite para componentes interactivos */}
         <FlowbiteInit />
         {children}
       </body>
