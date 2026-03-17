@@ -1,5 +1,9 @@
-import { LayoutDashboard } from 'lucide-react';
+import { LayoutDashboard, CalendarDays, CalendarRange, CircleDollarSign, Download, Section } from "lucide-react";
 import Breadcrumb, { BreadcrumbItem } from "@/components/Breadcrumb";
+import { StatCard } from "@/components/cards/StatCard";
+import { RecentActivityCard } from "@/components/cards/activity-card/RecentActivityCard";
+import { AreaChartCard } from "@/components/charts/AreaChartCard";
+import { PieChartCard } from "@/components/charts/PieChartCard";
 
 const GridBox = () => (
   <div className="border-2 border-dashed border-gray-300 rounded-lg dark:border-gray-600 min-h-32 md:min-h-48 transition-colors hover:border-primary/50" />
@@ -32,55 +36,53 @@ export default function DashboardPage() {
       {/*Breadcrumb */}
       <div className="flex flex-row flex-wrap justify-between items-center w-full mb-4 gap-4">
         <Breadcrumb items={BREADCRUMB_CONFIG} />
+        <button
+          type="button" 
+          className='flex flex-row gap-2 items-center text-gray-100 bg-primary opacity-100 hover:opacity-80 transition-all duration-100 dark:bg-primary_dark  focus:ring-4 focus:ring-primary dark:focus:ring-primary_dark dark:focus:ring-opacity-30 focus:ring-opacity-30 font-medium rounded-lg text-sm px-5 py-2.5 focus:outline-none'
+        >
+          <Download className="size-4" />
+          <span>
+            Descargar Reporte
+          </span>
+        </button>
       </div>
 
-      {/* Title Page Container */}
-      <h3 className="text-xl 2xl:text-2xl text-gray-900 dark:text-gray-100 font-semibold w-full py-4">
-        Dashboard
-      </h3>
-
-      {/* Grids Start */}
-
-        {/* Full 5 col */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-4 mb-4">
-          <GridBox />
-          <GridBox />
-          <GridBox />
-          <GridBox />
-          <GridBox />
+      {/* Container de Título y Cards */}
+      <div className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-4 gap-4 mb-4">
+        
+        {/* Sección de Título */}
+        <div className="flex items-center">
+          <h3 className="w-full pt-4 pb-0 xl:pb-4 xl:pt-4 text-xl 2xl:text-2xl text-gray-900 font-semibold dark:text-gray-100">
+            Dashboard
+          </h3>
         </div>
 
-        {/* Full 4 col and 2 row */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 mb-4">
-          <GridBox />
-          <GridBox />
-          <GridBox />
-          <GridBox />
-        </div>
-
-        {/* Full 3 col and 2 row */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 mb-4">
-          <GridBox />
-          <GridBox />
-          <GridBox />
-          <GridBox />
-          <GridBox />
-          <GridBox />
-        </div>
-
-        {/* Full 2 col and 2 row */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-4">
-          <GridBox />
-          <GridBox />
-          <GridBox />
-          <GridBox />
-        </div>
-
-        {/* Full Row */}
-        <div className="border-2 border-dashed rounded-lg border-gray-300 min-h-32 md:min-h-48 mb-4 dark:border-gray-600 transition-colors hover:border-primary/50" />
-
-      {/* Grids End */}
-
+        {/* Cards Reutilizables */}
+        <StatCard 
+          label="Cant. del día" 
+          value="290" 
+          icon={CalendarDays} 
+        />
+        
+        <StatCard 
+          label="Cant. del mes" 
+          value="180.848" 
+          icon={CalendarRange} 
+        />
+        
+        <StatCard 
+          label="Monto total" 
+          value="$ 500.000,00" 
+          icon={CircleDollarSign} 
+        />
+      </div>
+      {/* Container Charts Start */}
+      <section className="grid grid-cols-1 sm:grid-cols-1 xl:grid-cols-3 gap-4 mb-4">
+        <RecentActivityCard/>
+        <AreaChartCard/>
+        <PieChartCard/>
+      </section>
+      {/* Container Charts End */}
     </div>
   );
 }
