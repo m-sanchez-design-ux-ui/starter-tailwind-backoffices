@@ -5,10 +5,6 @@ import { RecentActivityCard } from "@/components/cards/activity-card/RecentActiv
 import { AreaChartCard } from "@/components/charts/AreaChartCard";
 import { PieChartCard } from "@/components/charts/PieChartCard";
 
-const GridBox = () => (
-  <div className="border-2 border-dashed border-gray-300 rounded-lg dark:border-gray-600 min-h-32 md:min-h-48 transition-colors hover:border-primary/50" />
-);
-
 export default function DashboardPage() {
 
   // Force an error to test the error page
