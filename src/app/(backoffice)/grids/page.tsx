@@ -5,7 +5,7 @@ const GridBox = () => (
   <div className="border-2 border-dashed border-gray-300 rounded-lg dark:border-gray-600 min-h-32 md:min-h-48 transition-colors hover:border-primary/50" />
 );
 
-export default function DashboardPage() {
+export default function GridsPage() {
 
   // Force an error to test the error page
   //throw new Error("Error Server Simulation");

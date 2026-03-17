@@ -1,6 +1,8 @@
 import type { Metadata } from "next";
 import "./globals.css";
 import FlowbiteInit from '@/components/FlowbiteInit';
+import { ToastProvider } from "@/context/ToastContext";
+import { LoadingProvider } from "@/context/LoadingContext";
 
 export const metadata: Metadata = {
   title: "Origin Solutions - Backoffice Starter",
@@ -16,7 +18,11 @@ export default function RootLayout({
     <html lang="es">
       <body className="font-sans antialiased">
         <FlowbiteInit />
-        {children}
+        <LoadingProvider>
+          <ToastProvider>
+            {children}
+          </ToastProvider>
+        </LoadingProvider>
       </body>
     </html>
   );

@@ -22,7 +22,7 @@ export default function NotificationDrawer({
       {/* Backdrop */}
       {isOpen && (
         <div 
-          className="fixed inset-0 bg-black/30 z-40 transition-opacity" 
+          className="fixed inset-0 bg-black/30 backdrop-blur-md z-40 transition-opacity" 
           onClick={onClose}
         />
       )}

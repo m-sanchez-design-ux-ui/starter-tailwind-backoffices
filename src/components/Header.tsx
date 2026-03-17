@@ -22,8 +22,8 @@ export default function Header({ onOpenSidebar }: HeaderProps) {
   };
 
   return (
-    <header className="min-h-13 w-full sticky top-0 z-20">
-      <div className="w-full px-7 py-3 bg-white dark:bg-gray-900 border-b border-gray-200 dark:border-gray-800 flex justify-between lg:justify-end items-center">
+    <header className="min-h-13 w-full sticky top-0 z-19">
+      <div className="w-full lg:ml-auto lg:max-w-[calc(100%-255px)] px-7 py-3 bg-white dark:bg-gray-900 border-b border-gray-200 dark:border-gray-800 flex justify-between lg:justify-end items-center">
         
         {/* Burger Menu (Solo Mobile) */}
         <button 

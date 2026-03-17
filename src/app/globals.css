@@ -132,6 +132,11 @@
   
   /* Sobreescribimos la fuente sans por defecto de Tailwind */
   --font-sans: var(--font-montserrat), ui-sans-serif, system-ui, sans-serif;
+
+  /* Usamos color-mix para derivar las opacidades del color primary */
+  --color-primary-loading-shadow-100: var(--color-primary);
+  --color-primary-loading-shadow-50: color-mix(in srgb, var(--color-primary), transparent 50%);
+  --color-primary-loading-shadow-0: color-mix(in srgb, var(--color-primary), transparent 100%);
 }
 
 @media (prefers-color-scheme: dark) {
@@ -152,3 +157,27 @@ body {
 .bg-gray-900\/50 {
   background-color: rgb(17 24 39 / 0.5) !important;
 }
+
+/*----------------------Loading Container-----------------------*/
+
+.animation-custom-pulse {
+  box-shadow: 0 0 0 20px var(--color-primary-loading-shadow-50);
+  transform: scale(0.8);
+  animation: pulse-custom 2s infinite;
+}
+
+@keyframes pulse-custom {
+  0% {
+    transform: scale(0.8);
+    box-shadow: 0 0 0 0px var(--color-primary-loading-shadow-100);
+  }
+  70% {
+    transform: scale(1);
+    box-shadow: 0 0 0 60px var(--color-primary-loading-shadow-0);
+  }
+  100% {
+    transform: scale(0.8);
+  }
+}
+
+/*----------------------Loading Container-----------------------*/
