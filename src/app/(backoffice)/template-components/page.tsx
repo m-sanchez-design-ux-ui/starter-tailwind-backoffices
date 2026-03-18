@@ -1,13 +1,12 @@
 "use client";
+import { useState } from 'react';
 import { Package, Plus } from 'lucide-react';
 import Breadcrumb, { BreadcrumbItem } from "@/components/Breadcrumb";
 import Link from 'next/link';
 import { useToast } from "@/context/ToastContext";
 import { useLoading } from "@/context/LoadingContext";
-
-const GridBox = () => (
-  <div className="border-2 border-dashed border-gray-300 rounded-lg dark:border-gray-600 min-h-32 md:min-h-48 transition-colors hover:border-primary/50" />
-);
+import ModalDefault from '@/components/modals/ModalDefault';
+import DeleteModal from "@/components/modals/DeleteModal";
 
 export default function TemplateComponentsPage() {
 
@@ -18,7 +17,7 @@ export default function TemplateComponentsPage() {
     const handleShowLoading = () => {
     setLoading(true);
     
-    // Se oculta automáticamente tras 5 segundos
+    //Loading Hide after 5 seconds (for demo purposes)
     setTimeout(() => {
         setLoading(false);
     }, 5000);
@@ -39,6 +38,18 @@ export default function TemplateComponentsPage() {
         href: '', 
         },
     ];
+
+    const [isDefaultModalOpen, setIsDefaultModalOpen] = useState(false);
+    const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
+
+    const handleDefaultConfirm = () => {
+        console.log("Acción confirmada en Origin Backoffice");
+    };
+
+    const handleDeleteConfirm = () => {
+        console.log("Item eliminado con éxito");
+        setIsDeleteModalOpen(false);
+    };
 
     return (
         <div className="flex flex-col gap-6">
@@ -135,6 +146,7 @@ export default function TemplateComponentsPage() {
                 <button
                     type="button" 
                     className='flex items-center flex-nowrap gap-2 py-2.5 px-5 text-sm font-medium text-gray-900 focus:outline-none bg-white rounded-lg border border-gray-200 hover:bg-gray-100 hover:text-primary focus:z-10 focus:ring-4 focus:ring-gray-100 dark:bg-transparent dark:text-gray-100 dark:hover:bg-gray-800 dark:border-gray-400 dark:hover:text-primary_dark'
+                    onClick={() => setIsDefaultModalOpen(true)}
                 >
                     <span>
                         Show Default Modal
@@ -144,6 +156,7 @@ export default function TemplateComponentsPage() {
                 <button
                     type="button" 
                     className='flex items-center flex-nowrap gap-2 py-2.5 px-5 text-sm font-medium text-gray-900 focus:outline-none bg-white rounded-lg border border-gray-200 hover:bg-gray-100 hover:text-primary focus:z-10 focus:ring-4 focus:ring-gray-100 dark:bg-transparent dark:text-gray-100 dark:hover:bg-gray-800 dark:border-gray-400 dark:hover:text-primary_dark'
+                    onClick={() => setIsDeleteModalOpen(true)}
                 >
                     <span>
                         Show Delete Modal 
@@ -219,6 +232,19 @@ export default function TemplateComponentsPage() {
             <div className="flex justify-center items-center border-2 border-dashed rounded-lg border-gray-300 min-h-48 md:min-h-96 mb-4 dark:border-gray-600 transition-colors hover:border-primary/50">
                 DataTable...
             </div>
+
+            <ModalDefault 
+                isOpen={isDefaultModalOpen} 
+                onClose={() => setIsDefaultModalOpen(false)} 
+                onConfirm={handleDefaultConfirm}
+                description="Esta acción actualizará los datos permanentemente."
+            />
+
+            <DeleteModal 
+                isOpen={isDeleteModalOpen}
+                onClose={() => setIsDeleteModalOpen(false)}
+                onConfirm={handleDeleteConfirm}
+            />
 
         </div>
     );
