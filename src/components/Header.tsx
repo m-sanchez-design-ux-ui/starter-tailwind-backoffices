@@ -3,23 +3,16 @@
 import { useState } from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
-import NotificationDrawer from './drawers/NotificationDrawer'; 
 
 interface HeaderProps {
   onOpenSidebar: () => void;
+  onOpenDrawer: () => void;
+  notificationCount: number;
 }
 
-export default function Header({ onOpenSidebar }: HeaderProps) {
-  const [isUserMenuOpen, setIsUserMenuOpen] = useState(false);
-  const [isDrawerOpen, setIsDrawerOpen] = useState(false);
-  const [notifications, setNotifications] = useState([
-    { mensaje: "Nueva actualización del Design System disponible." },
-    { mensaje: "El cliente Opción 01 ha actualizado sus archivos." }
-  ]);
 
-  const deleteNotification = (index: number) => {
-    setNotifications(notifications.filter((_, i) => i !== index));
-  };
+export default function Header({ onOpenSidebar, onOpenDrawer, notificationCount }: HeaderProps) {
+  const [isUserMenuOpen, setIsUserMenuOpen] = useState(false);
 
   return (
     <header className="min-h-13 w-full sticky top-0 z-19">
@@ -38,12 +31,12 @@ export default function Header({ onOpenSidebar }: HeaderProps) {
         </button>
 
         <div className="flex items-center gap-4">
-          {/* Botón de Notificaciones */}
+         {/* Botón de Notificaciones: Ahora llama a onOpenDrawer */}
           <button 
-            onClick={() => setIsDrawerOpen(true)}
+            onClick={onOpenDrawer} 
             className="group relative flex justify-center items-center size-8 bg-gray-100 hover:bg-gray-200 rounded-lg dark:bg-gray-700 transition-all"
           >
-            {notifications.length > 0 && (
+            {notificationCount > 0 && (
               <div className="absolute top-1 right-1.5 size-2 bg-red-600 rounded-full border border-white dark:border-gray-900 animate-pulse"></div>
             )}
             <svg viewBox="0 0 24 24" className="size-5 fill-gray-700 dark:fill-gray-100 group-hover:fill-primary">
@@ -128,13 +121,6 @@ export default function Header({ onOpenSidebar }: HeaderProps) {
           </div>
         </div>
       </div>
-      {/* Notifications Drawer */}
-      <NotificationDrawer 
-        isOpen={isDrawerOpen}
-        onClose={() => setIsDrawerOpen(false)}
-        notifications={notifications}
-        onDelete={deleteNotification}
-      />
     </header>
   );
 }

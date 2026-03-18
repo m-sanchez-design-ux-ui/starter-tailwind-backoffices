@@ -22,14 +22,14 @@ export default function NotificationDrawer({
       {/* Backdrop */}
       {isOpen && (
         <div 
-          className="fixed inset-0 bg-black/30 backdrop-blur-md z-40 transition-opacity" 
+          className="fixed inset-0 bg-black/30 backdrop-blur-md z-60 transition-opacity" 
           onClick={onClose}
         />
       )}
 
       {/* Drawer */}
       <aside
-        className={`fixed top-0 right-0 z-50 h-screen p-4 overflow-y-auto transition-transform bg-white w-80 dark:bg-gray-800 shadow-2xl ${
+        className={`fixed top-0 right-0 z-70 h-screen p-4 overflow-y-auto transition-transform bg-white w-80 dark:bg-gray-800 shadow-2xl ${
           isOpen ? "translate-x-0" : "translate-x-full"
         }`}
       >
