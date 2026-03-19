@@ -114,7 +114,7 @@ export default function Sidebar({ isOpen }: SidebarProps) {
         </nav>
 
         {/* Footer: Powered By Origin con Image */}
-        <div className="p-4 border-t border-gray-100 dark:border-gray-800 sticky bottom-0 bg-inherit flex flex-col items-center gap-1">
+        <div className="bg-white p-4 border-t border-gray-100 dark:border-gray-800 sticky bottom-0 flex flex-col items-center gap-1">
           <p className="text-[10px] text-primary uppercase italic font-medium">Powered by</p>
           <div className="relative w-24 h-6">
             <Image 
