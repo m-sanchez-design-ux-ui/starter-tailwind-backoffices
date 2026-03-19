@@ -8,6 +8,7 @@ import { useLoading } from "@/context/LoadingContext";
 import ModalDefault from '@/components/modals/ModalDefault';
 import DeleteModal from "@/components/modals/DeleteModal";
 import FilterAccordion from '@/components/filters/FilterAccordion';
+import MainDataTable from '@/components/datatables/MainDataTable';
 
 export default function TemplateComponentsPage() {
 
@@ -222,19 +223,10 @@ export default function TemplateComponentsPage() {
                     </span>
                 </Link>
             </div>
-            
-            {/* Full Row */}
-            {/* <div className="flex justify-center items-center border-2 border-dashed rounded-lg border-gray-300 min-h-32 md:min-h-48 mb-4 dark:border-gray-600 transition-colors hover:border-primary/50">
-                Filtro...
-            </div> */}
 
-            {/* Filter Accordion */}
             <FilterAccordion />
 
-            {/* Full Row */}
-            <div className="flex justify-center items-center border-2 border-dashed rounded-lg border-gray-300 min-h-48 md:min-h-96 mb-4 dark:border-gray-600 transition-colors hover:border-primary/50">
-                DataTable...
-            </div>
+            <MainDataTable />
 
             <ModalDefault 
                 isOpen={isDefaultModalOpen} 
