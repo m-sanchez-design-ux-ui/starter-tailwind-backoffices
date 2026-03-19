@@ -3,6 +3,7 @@
 import React, { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Eye, Edit3, Trash2 } from 'lucide-react';
+import Image from 'next/image';
 
 interface TableItem {
   id: number;
@@ -14,21 +15,21 @@ interface TableItem {
 }
 
 const initialData: TableItem[] = [
-  { id: 1, nombre: "Combo Light", sucursal: "Recoleta", precio: "$2.100", activo: false, imagen: "S" },
-  { id: 2, nombre: "Combo Premium", sucursal: "Puerto Madero", precio: "$5.500", activo: true, imagen: "S" },
-  { id: 3, nombre: "Combo Tradicional", sucursal: "Villa Urquiza", precio: "$2.600", activo: true, imagen: "S" },
-  { id: 4, nombre: "Combo Vegano", sucursal: "San Telmo", precio: "$2.900", activo: false, imagen: "S" },
-  { id: 5, nombre: "Combo Clásico", sucursal: "Palermo", precio: "$2.500", activo: true, imagen: "S" },
-  { id: 6, nombre: "Combo Ejecutivo", sucursal: "Belgrano", precio: "$3.100", activo: true, imagen: "S" },
-  { id: 7, nombre: "Combo Especial", sucursal: "Barracas", precio: "$3.800", activo: false, imagen: "S" },
-  { id: 8, nombre: "Combo Express", sucursal: "Microcentro", precio: "$1.300", activo: true, imagen: "S" },
-  { id: 9, nombre: "Combo Familiar", sucursal: "Caballito", precio: "$4.800", activo: true, imagen: "S" },
-  { id: 10, nombre: "Combo Infantil", sucursal: "Almagro", precio: "$1.800", activo: false, imagen: "S" },
-  { id: 11, nombre: "Combo Gourmet", sucursal: "Colegiales", precio: "$5.200", activo: true, imagen: "S" },
-  { id: 12, nombre: "Combo Fitness", sucursal: "Nuñez", precio: "$3.400", activo: true, imagen: "S" },
-  { id: 13, nombre: "Combo Parrillero", sucursal: "Mataderos", precio: "$6.500", activo: false, imagen: "S" },
-  { id: 14, nombre: "Combo Porteño", sucursal: "Boedo", precio: "$2.700", activo: true, imagen: "S" },
-  { id: 15, nombre: "Combo Deluxe", sucursal: "Retiro", precio: "$7.200", activo: true, imagen: "S" },
+  { id: 1, nombre: "Combo Light", sucursal: "Recoleta", precio: "$2.100", activo: false, imagen: '/images/cover/cover-default.svg' },
+  { id: 2, nombre: "Combo Premium", sucursal: "Puerto Madero", precio: "$5.500", activo: true, imagen: '/images/cover/cover-default.svg' },
+  { id: 3, nombre: "Combo Tradicional", sucursal: "Villa Urquiza", precio: "$2.600", activo: true, imagen: '/images/cover/cover-default.svg' },
+  { id: 4, nombre: "Combo Vegano", sucursal: "San Telmo", precio: "$2.900", activo: false, imagen: '/images/cover/cover-default.svg' },
+  { id: 5, nombre: "Combo Clásico", sucursal: "Palermo", precio: "$2.500", activo: true, imagen: '/images/cover/cover-default.svg' },
+  { id: 6, nombre: "Combo Ejecutivo", sucursal: "Belgrano", precio: "$3.100", activo: true, imagen: '/images/cover/cover-default.svg' },
+  { id: 7, nombre: "Combo Especial", sucursal: "Barracas", precio: "$3.800", activo: false, imagen: '/images/cover/cover-default.svg' },
+  { id: 8, nombre: "Combo Express", sucursal: "Microcentro", precio: "$1.300", activo: true, imagen: '/images/cover/cover-default.svg' },
+  { id: 9, nombre: "Combo Familiar", sucursal: "Caballito", precio: "$4.800", activo: true, imagen: '/images/cover/cover-default.svg' },
+  { id: 10, nombre: "Combo Infantil", sucursal: "Almagro", precio: "$1.800", activo: false, imagen: '/images/cover/cover-default.svg' },
+  { id: 11, nombre: "Combo Gourmet", sucursal: "Colegiales", precio: "$5.200", activo: true, imagen: '/images/cover/cover-default.svg' },
+  { id: 12, nombre: "Combo Fitness", sucursal: "Nuñez", precio: "$3.400", activo: true, imagen: '/images/cover/cover-default.svg' },
+  { id: 13, nombre: "Combo Parrillero", sucursal: "Mataderos", precio: "$6.500", activo: false, imagen: '/images/cover/cover-default.svg' },
+  { id: 14, nombre: "Combo Porteño", sucursal: "Boedo", precio: "$2.700", activo: true, imagen: '/images/cover/cover-default.svg' },
+  { id: 15, nombre: "Combo Veggie", sucursal: "Flores", precio: "$3.000", activo: true, imagen: '/images/cover/cover-default.svg' },
 ];
 
 export default function MainDataTable() {
@@ -58,20 +59,26 @@ export default function MainDataTable() {
         <table className="w-full text-sm text-left text-gray-500 dark:text-gray-400">
           <thead className="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700  dark:text-gray-400 border-b border-gray-200 dark:border-gray-600">
             <tr>
-              <th scope="col" className="p-4">
-                <input 
-                  type="checkbox" 
-                  checked={selectedItems.length === data.length}
-                  onChange={toggleAll}
-                  className="w-4 h-4 text-primary bg-gray-100 border-gray-300 rounded focus:ring-primary dark:focus:ring-primary_dark dark:ring-offset-gray-800 dark:bg-gray-700 dark:border-gray-600" 
-                />
-              </th>
-              <th scope="col" className="px-4 py-3 text-center">Imagen</th>
-              <th scope="col" className="px-4 py-3">Nombre</th>
-              <th scope="col" className="px-4 py-3">Sucursal</th>
-              <th scope="col" className="px-4 py-3 text-center">Precio</th>
-              <th scope="col" className="px-4 py-3 text-center">Estado</th>
-              <th scope="col" className="px-4 py-3 text-center">Acciones</th>
+                <th scope="col" className="p-4">
+                <div className="flex items-center">
+                    <input 
+                        id="checkbox-all-search" 
+                        type="checkbox" 
+                        checked={selectedItems.length === data.length}
+                        onChange={toggleAll}
+                        // Clases actualizadas según tu docu:
+                        className="appearance-none w-4 h-4 border border-default-medium rounded-sm bg-neutral-secondary-medium focus:ring-2 focus:ring-primary/30 checked:bg-primary checked:border-primary transition-all duration-200 cursor-pointer"
+                    />
+
+                    <label htmlFor="checkbox-all-search" className="sr-only">Seleccionar todo</label>
+                </div>
+                </th>
+                <th scope="col" className="px-4 py-3 text-center">Imagen</th>
+                <th scope="col" className="px-4 py-3">Nombre</th>
+                <th scope="col" className="px-4 py-3">Sucursal</th>
+                <th scope="col" className="px-4 py-3 text-center">Precio</th>
+                <th scope="col" className="px-4 py-3">Estado</th>
+                <th scope="col" className="px-4 py-3 text-center">Acciones</th>
             </tr>
           </thead>
           <tbody>
@@ -81,19 +88,32 @@ export default function MainDataTable() {
                 className={`border-b border-gray-200 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600 transition-colors ${selectedItems.includes(item.id) ? 'bg-blue-50/50 dark:bg-primary/10' : ''}`}
               >
                 <td className="w-4 p-4">
-                  <input 
-                    type="checkbox" 
-                    checked={selectedItems.includes(item.id)}
-                    onChange={() => toggleItem(item.id)}
-                    className="w-4 h-4 text-primary bg-gray-100 border-gray-300 rounded focus:ring-primary dark:focus:ring-primary_dark dark:bg-gray-700" 
-                  />
-                </td>
-                <td className="px-4 py-3 text-center">
-                  <div className="flex justify-center">
-                    <div className="size-8 rounded-lg bg-blue-100 dark:bg-blue-900/30 flex items-center justify-center text-primary dark:text-primary_dark font-bold text-xs border border-blue-200 dark:border-primary/20">
-                      {item.imagen}
+                    <div className="flex items-center">
+                        <input 
+                        id={`checkbox-table-search-${item.id}`} 
+                        type="checkbox" 
+                        checked={selectedItems.includes(item.id)}
+                        onChange={() => toggleItem(item.id)}
+                        // Clases idénticas para mantener la consistencia "Pixel Perfect":
+                            className="appearance-none w-4 h-4 border border-default-medium rounded-sm bg-neutral-secondary-medium focus:ring-2 focus:ring-primary/30 checked:bg-primary checked:border-primary transition-all duration-200 cursor-pointer"
+                        />
+                        <label htmlFor={`checkbox-table-search-${item.id}`} className="sr-only">Seleccionar fila</label>
                     </div>
-                  </div>
+                </td>
+                <td className="px-4 py-3">
+                <div className="flex items-center justify-center w-10 h-10 rounded-lg bg-primary-soft/30 overflow-hidden border border-primary-soft">
+                    <Image
+                        src={item.imagen} 
+                        alt={item.nombre}
+                        width={40}
+                        height={40}
+                        className="object-cover w-10 h-10 rounded-lg"
+                        // Si la imagen falla, podés usar un fallback aquí
+                        onError={(e) => {
+                            // Lógica opcional para cambiar a un icono por defecto si el path no existe
+                        }}
+                    />
+                </div>
                 </td>
                 <td className="px-4 py-3 font-medium text-gray-900 whitespace-nowrap dark:text-white">
                   {item.nombre}
@@ -103,7 +123,7 @@ export default function MainDataTable() {
                 
                 {/* Toggle + Badge Col */}
                 <td className="px-4 py-3">
-                  <div className="flex items-center justify-center gap-3">
+                  <div className="flex items-center gap-3">
                     <label className="relative inline-flex items-center cursor-pointer">
                       <input 
                         type="checkbox" 
@@ -194,7 +214,7 @@ function ActionButton({ icon, tooltip, variant = 'default', onClick }: { icon: I
             initial={{ opacity: 0, y: 5 }}
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: 5 }}
-            className="absolute bottom-full mb-2 px-2 py-1 text-xs font-medium text-gray-700 bg-white rounded-md shadow-sm whitespace-nowrap z-50 pointer-events-none"
+            className="absolute bottom-full mb-2 px-2 py-1 text-xs font-medium text-gray-900 bg-white rounded-md shadow-sm whitespace-nowrap z-50 pointer-events-none"
           >
             {tooltip}
             <div className="absolute top-full left-1/2 -translate-x-1/2 border-4 border-transparent border-t-white" />
