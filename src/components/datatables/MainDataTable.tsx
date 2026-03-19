@@ -53,6 +53,16 @@ export default function MainDataTable() {
     ));
   };
 
+    {/*Paginado*/}
+    const [currentPage, setCurrentPage] = useState(1);
+    const itemsPerPage = 5; 
+
+    {/*Lógica Paginado*/}
+    const indexOfLastItem = currentPage * itemsPerPage;
+    const indexOfFirstItem = indexOfLastItem - itemsPerPage;
+    const currentItems = data.slice(indexOfFirstItem, indexOfLastItem);
+    const totalPages = Math.ceil(data.length / itemsPerPage);
+
   return (
     <div className="relative overflow-hidden bg-white shadow-md dark:bg-gray-800 sm:rounded-lg border border-gray-200 dark:border-gray-700">
       <div className="overflow-x-auto">
@@ -66,10 +76,8 @@ export default function MainDataTable() {
                         type="checkbox" 
                         checked={selectedItems.length === data.length}
                         onChange={toggleAll}
-                        // Clases actualizadas según tu docu:
                         className="appearance-none w-4 h-4 border border-default-medium rounded-sm bg-neutral-secondary-medium focus:ring-2 focus:ring-primary/30 checked:bg-primary checked:border-primary transition-all duration-200 cursor-pointer"
                     />
-
                     <label htmlFor="checkbox-all-search" className="sr-only">Seleccionar todo</label>
                 </div>
                 </th>
@@ -82,7 +90,7 @@ export default function MainDataTable() {
             </tr>
           </thead>
           <tbody>
-            {data.map((item) => (
+            {currentItems.map((item) => (
               <tr 
                 key={item.id} 
                 className={`border-b border-gray-200 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600 transition-colors ${selectedItems.includes(item.id) ? 'bg-blue-50/50 dark:bg-primary/10' : ''}`}
@@ -94,8 +102,7 @@ export default function MainDataTable() {
                         type="checkbox" 
                         checked={selectedItems.includes(item.id)}
                         onChange={() => toggleItem(item.id)}
-                        // Clases idénticas para mantener la consistencia "Pixel Perfect":
-                            className="appearance-none w-4 h-4 border border-default-medium rounded-sm bg-neutral-secondary-medium focus:ring-2 focus:ring-primary/30 checked:bg-primary checked:border-primary transition-all duration-200 cursor-pointer"
+                        className="appearance-none w-4 h-4 border border-default-medium rounded-sm bg-neutral-secondary-medium focus:ring-2 focus:ring-primary/30 checked:bg-primary checked:border-primary transition-all duration-200 cursor-pointer"
                         />
                         <label htmlFor={`checkbox-table-search-${item.id}`} className="sr-only">Seleccionar fila</label>
                     </div>
@@ -108,10 +115,6 @@ export default function MainDataTable() {
                             width={40}
                             height={40}
                             className="object-cover w-10 h-10 rounded-lg bg-primary-soft/30 border border-primary-soft"
-                            // Si la imagen falla, podés usar un fallback aquí
-                            onError={(e) => {
-                                // Lógica opcional para cambiar a un icono por defecto si el path no existe
-                            }}
                         />
                     </div>
                 </td>
@@ -121,7 +124,6 @@ export default function MainDataTable() {
                 <td className="px-4 py-3">{item.sucursal}</td>
                 <td className="px-4 py-3 text-center font-semibold">{item.precio}</td>
                 
-                {/* Toggle + Badge Col */}
                 <td className="px-4 py-3">
                   <div className="flex items-center gap-3">
                     <label className="relative inline-flex items-center cursor-pointer">
@@ -143,7 +145,6 @@ export default function MainDataTable() {
                   </div>
                 </td>
 
-                {/* Acciones con Tooltips */}
                 <td className="px-4 py-3">
                   <div className="flex items-center justify-center gap-2">
                     <ActionButton icon="eye" tooltip="Ver detalle" />
@@ -160,18 +161,40 @@ export default function MainDataTable() {
       {/* Pagination Footer */}
       <nav className="flex flex-col items-start justify-between p-4 space-y-3 md:flex-row md:items-center md:space-y-0 border-t border-gray-200 dark:border-gray-700" aria-label="Table navigation">
         <span className="text-sm font-normal text-gray-500 dark:text-gray-400">
-          Mostrando <span className="font-semibold text-gray-900 dark:text-white">1-10</span> de <span className="font-semibold text-gray-900 dark:text-white">100</span>
+          Mostrando <span className="font-semibold text-gray-900 dark:text-white">{indexOfFirstItem + 1}-{Math.min(indexOfLastItem, data.length)}</span> de <span className="font-semibold text-gray-900 dark:text-white">{data.length}</span>
         </span>
         <ul className="inline-flex items-stretch -space-x-px">
           <li>
-            <button className="flex items-center justify-center h-full py-1.5 px-3 ml-0 text-gray-500 bg-white rounded-l-lg border border-gray-300 hover:bg-gray-100 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white">
+            <button 
+              onClick={() => setCurrentPage(prev => Math.max(prev - 1, 1))}
+              disabled={currentPage === 1}
+              className="hover:cursor-pointer flex items-center justify-center h-full py-1.5 px-3 ml-0 text-gray-500 bg-white rounded-l-lg border border-gray-300 hover:bg-gray-100 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white disabled:opacity-50 disabled:cursor-not-allowed"
+            >
               <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 20 20"><path fillRule="evenodd" d="M12.707 5.293a1 1 0 010 1.414L9.414 10l3.293 3.293a1 1 0 01-1.414 1.414l-4-4a1 1 0 010-1.414l4-4a1 1 0 011.414 0z" clipRule="evenodd" /></svg>
             </button>
           </li>
-          <li><button className="px-3 py-2 leading-tight text-white bg-primary border border-primary dark:bg-primary_dark">1</button></li>
-          <li><button className="px-3 py-2 leading-tight text-gray-500 bg-white border border-gray-300 hover:bg-gray-100 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400">2</button></li>
+          
+          {Array.from({ length: totalPages }, (_, i) => i + 1).map((page) => (
+            <li key={page}>
+              <button 
+                onClick={() => setCurrentPage(page)}
+                className={`hover:cursor-pointer px-3 py-2 leading-tight border transition-colors ${
+                  currentPage === page 
+                  ? 'text-white bg-primary border-primary dark:bg-primary_dark' 
+                  : 'text-gray-500 bg-white border-gray-300 hover:bg-gray-100 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700'
+                }`}
+              >
+                {page}
+              </button>
+            </li>
+          ))}
+
           <li>
-            <button className="flex items-center justify-center h-full py-1.5 px-3 text-gray-500 bg-white rounded-r-lg border border-gray-300 hover:bg-gray-100 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white">
+            <button 
+              onClick={() => setCurrentPage(prev => Math.min(prev + 1, totalPages))}
+              disabled={currentPage === totalPages}
+              className="hover:cursor-pointer flex items-center justify-center h-full py-1.5 px-3 text-gray-500 bg-white rounded-r-lg border border-gray-300 hover:bg-gray-100 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white disabled:opacity-50 disabled:cursor-not-allowed"
+            >
               <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 20 20"><path fillRule="evenodd" d="M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z" clipRule="evenodd" /></svg>
             </button>
           </li>
@@ -181,18 +204,17 @@ export default function MainDataTable() {
   );
 
 }
+
 type IconType = 'eye' | 'edit' | 'trash';
 
-// Subcomponente para botones con Tooltip
 function ActionButton({ icon, tooltip, variant = 'default', onClick }: { icon: IconType; tooltip: string; variant?: 'default' | 'danger'; onClick?: () => void; }) {
   const [showTooltip, setShowTooltip] = useState(false);
 
-
-    const icons: Record<IconType, React.ReactNode> = {
-        eye: <Eye size={18} strokeWidth={2} />,
-        edit: <Edit3 size={18} strokeWidth={2} />,
-        trash: <Trash2 size={18} strokeWidth={2} />,
-    };
+  const icons: Record<IconType, React.ReactNode> = {
+    eye: <Eye size={18} strokeWidth={2} />,
+    edit: <Edit3 size={18} strokeWidth={2} />,
+    trash: <Trash2 size={18} strokeWidth={2} />,
+  };
 
   const colors = variant === 'danger' 
     ? 'text-red-500 hover:bg-red-100 dark:hover:bg-red-900/20' 
