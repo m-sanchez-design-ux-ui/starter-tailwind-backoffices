@@ -100,20 +100,20 @@ export default function MainDataTable() {
                         <label htmlFor={`checkbox-table-search-${item.id}`} className="sr-only">Seleccionar fila</label>
                     </div>
                 </td>
-                <td className="px-4 py-3">
-                <div className="flex items-center justify-center w-10 h-10 rounded-lg bg-primary-soft/30 overflow-hidden border border-primary-soft">
-                    <Image
-                        src={item.imagen} 
-                        alt={item.nombre}
-                        width={40}
-                        height={40}
-                        className="object-cover w-10 h-10 rounded-lg"
-                        // Si la imagen falla, podés usar un fallback aquí
-                        onError={(e) => {
-                            // Lógica opcional para cambiar a un icono por defecto si el path no existe
-                        }}
-                    />
-                </div>
+                <td className="px-4 py-3 text-center">
+                    <div className="flex items-center justify-center overflow-hidden">
+                        <Image
+                            src={item.imagen} 
+                            alt={item.nombre}
+                            width={40}
+                            height={40}
+                            className="object-cover w-10 h-10 rounded-lg bg-primary-soft/30 border border-primary-soft"
+                            // Si la imagen falla, podés usar un fallback aquí
+                            onError={(e) => {
+                                // Lógica opcional para cambiar a un icono por defecto si el path no existe
+                            }}
+                        />
+                    </div>
                 </td>
                 <td className="px-4 py-3 font-medium text-gray-900 whitespace-nowrap dark:text-white">
                   {item.nombre}
