@@ -3,6 +3,7 @@ import { useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import { LayoutDashboard, Box, LifeBuoy, ChevronDown, ChartColumnIncreasing } from "lucide-react";
+
 import { SidebarItem } from "./SidebarItem";
 import { SidebarItemWithDropdown } from "./SidebarItemWithDropdown";
 
@@ -11,7 +12,6 @@ interface SidebarProps {
 }
 
 export default function Sidebar({ isOpen }: SidebarProps) {
-
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
   const [selectedClient, setSelectedClient] = useState({
     name: "Seleccionar...",
@@ -21,6 +21,7 @@ export default function Sidebar({ isOpen }: SidebarProps) {
   return (
     <aside className={`fixed top-0 left-0 z-31 w-64 h-screen border-r border-gray-200 dark:border-gray-600 dark:bg-gray-950 bg-white transition-transform ${isOpen ? "translate-x-0" : "-translate-x-full"} lg:translate-x-0`}>
       <div className="h-full flex flex-col justify-between overflow-y-auto">
+        
         {/* Header con Logo Optimizado */}
         <div className="p-3 h-17 sticky top-0 z-10 flex justify-center items-center bg-inherit">
           <Link href="/dashboard" className="relative w-full h-8">
@@ -85,14 +86,12 @@ export default function Sidebar({ isOpen }: SidebarProps) {
               icon={<LayoutDashboard className="size-6" />} 
             />
 
-            {/* Dropdown de Starter Kit */}
             <SidebarItemWithDropdown 
               label="Starter kit"
-              rootHref="/"
               icon={<Box className="size-6" />}
               items={[
                 { label: "Components", href: "/template-components" }, 
-                { label: "Grids", href: "/grids" },              
+                { label: "Grids", href: "/grids" },               
               ]}
             />
 

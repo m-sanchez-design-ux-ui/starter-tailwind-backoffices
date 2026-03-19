@@ -2,6 +2,14 @@
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 
+// 1. Definimos la interfaz para que TypeScript reconozca los tipos
+interface SidebarItemProps {
+  href: string;
+  icon: React.ReactNode;
+  label: string;
+  disabled?: boolean; // El '?' significa que es opcional
+}
+
 export const SidebarItem = ({ href, icon, label, disabled }: SidebarItemProps) => {
   const pathname = usePathname();
   

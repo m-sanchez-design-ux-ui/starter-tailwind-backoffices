@@ -16,10 +16,11 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
   const deleteNotification = (index: number) => {
     setNotifications(notifications.filter((_, i) => i !== index));
   };
+  
 
   return (
     <div className="flex h-screen w-full bg-white dark:bg-gray-950 text-gray-900 dark:text-gray-100">
-      <Sidebar isOpen={isSidebarOpen} onClose={() => setIsSidebarOpen(false)} />
+      <Sidebar isOpen={isSidebarOpen} />
 
       <div className="flex flex-col flex-1 min-w-0 overflow-hidden">
         {/* PASAMOS isDrawerOpen y la función para abrirlo al Header */}
