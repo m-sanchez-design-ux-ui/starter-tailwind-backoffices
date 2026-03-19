@@ -2,7 +2,7 @@
 import { useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
-import { LayoutDashboard, Box, HelpCircle, ChevronDown, ChartColumnIncreasing } from "lucide-react";
+import { LayoutDashboard, Box, LifeBuoy, ChevronDown, ChartColumnIncreasing } from "lucide-react";
 import { SidebarItem } from "./SidebarItem";
 import { SidebarItemWithDropdown } from "./SidebarItemWithDropdown";
 
@@ -108,7 +108,7 @@ export default function Sidebar({ isOpen }: SidebarProps) {
             <SidebarItem 
               href="/help" 
               label="Ayuda" 
-              icon={<HelpCircle className="size-6" />} 
+              icon={<LifeBuoy className="size-6" />} 
             />
           </ul>
         </nav>
