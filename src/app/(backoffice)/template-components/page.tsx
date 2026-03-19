@@ -7,6 +7,7 @@ import { useToast } from "@/context/ToastContext";
 import { useLoading } from "@/context/LoadingContext";
 import ModalDefault from '@/components/modals/ModalDefault';
 import DeleteModal from "@/components/modals/DeleteModal";
+import FilterAccordion from '@/components/filters/FilterAccordion';
 
 export default function TemplateComponentsPage() {
 
@@ -73,7 +74,6 @@ export default function TemplateComponentsPage() {
                         type="button" 
                         className='flex items-center flex-nowrap gap-2 py-2.5 px-5 text-sm font-medium text-gray-900 focus:outline-none bg-white rounded-lg border border-gray-200 hover:bg-gray-100 hover:text-primary focus:z-10 focus:ring-4 focus:ring-gray-100 dark:bg-transparent dark:text-gray-100 dark:hover:bg-gray-800 dark:border-gray-400 dark:hover:text-primary_dark'
                     >
-                        <Plus className="size-4" />
                         <span>
                             Tertiary Button
                         </span>
@@ -224,9 +224,12 @@ export default function TemplateComponentsPage() {
             </div>
             
             {/* Full Row */}
-            <div className="flex justify-center items-center border-2 border-dashed rounded-lg border-gray-300 min-h-32 md:min-h-48 mb-4 dark:border-gray-600 transition-colors hover:border-primary/50">
+            {/* <div className="flex justify-center items-center border-2 border-dashed rounded-lg border-gray-300 min-h-32 md:min-h-48 mb-4 dark:border-gray-600 transition-colors hover:border-primary/50">
                 Filtro...
-            </div>
+            </div> */}
+
+            {/* Filter Accordion */}
+            <FilterAccordion />
 
             {/* Full Row */}
             <div className="flex justify-center items-center border-2 border-dashed rounded-lg border-gray-300 min-h-48 md:min-h-96 mb-4 dark:border-gray-600 transition-colors hover:border-primary/50">
