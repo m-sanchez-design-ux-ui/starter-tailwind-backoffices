@@ -2,7 +2,7 @@
 
 import React, { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { Eye, Edit3, Trash2 } from 'lucide-react';
+import { Eye, Edit3, Trash2, ChevronLeft, ChevronRight } from 'lucide-react';
 import Image from 'next/image';
 
 interface TableItem {
@@ -14,31 +14,67 @@ interface TableItem {
   imagen: string;
 }
 
-const initialData: TableItem[] = [
-  { id: 1, nombre: "Combo Light", sucursal: "Recoleta", precio: "$2.100", activo: false, imagen: '/images/cover/cover-default.svg' },
-  { id: 2, nombre: "Combo Premium", sucursal: "Puerto Madero", precio: "$5.500", activo: true, imagen: '/images/cover/cover-default.svg' },
-  { id: 3, nombre: "Combo Tradicional", sucursal: "Villa Urquiza", precio: "$2.600", activo: true, imagen: '/images/cover/cover-default.svg' },
-  { id: 4, nombre: "Combo Vegano", sucursal: "San Telmo", precio: "$2.900", activo: false, imagen: '/images/cover/cover-default.svg' },
-  { id: 5, nombre: "Combo Clásico", sucursal: "Palermo", precio: "$2.500", activo: true, imagen: '/images/cover/cover-default.svg' },
-  { id: 6, nombre: "Combo Ejecutivo", sucursal: "Belgrano", precio: "$3.100", activo: true, imagen: '/images/cover/cover-default.svg' },
-  { id: 7, nombre: "Combo Especial", sucursal: "Barracas", precio: "$3.800", activo: false, imagen: '/images/cover/cover-default.svg' },
-  { id: 8, nombre: "Combo Express", sucursal: "Microcentro", precio: "$1.300", activo: true, imagen: '/images/cover/cover-default.svg' },
-  { id: 9, nombre: "Combo Familiar", sucursal: "Caballito", precio: "$4.800", activo: true, imagen: '/images/cover/cover-default.svg' },
-  { id: 10, nombre: "Combo Infantil", sucursal: "Almagro", precio: "$1.800", activo: false, imagen: '/images/cover/cover-default.svg' },
-  { id: 11, nombre: "Combo Gourmet", sucursal: "Colegiales", precio: "$5.200", activo: true, imagen: '/images/cover/cover-default.svg' },
-  { id: 12, nombre: "Combo Fitness", sucursal: "Nuñez", precio: "$3.400", activo: true, imagen: '/images/cover/cover-default.svg' },
-  { id: 13, nombre: "Combo Parrillero", sucursal: "Mataderos", precio: "$6.500", activo: false, imagen: '/images/cover/cover-default.svg' },
-  { id: 14, nombre: "Combo Porteño", sucursal: "Boedo", precio: "$2.700", activo: true, imagen: '/images/cover/cover-default.svg' },
-  { id: 15, nombre: "Combo Veggie", sucursal: "Flores", precio: "$3.000", activo: true, imagen: '/images/cover/cover-default.svg' },
-];
+const initialData: TableItem[] = Array.from({ length: 500 }, (_, i) => {
+  const id = i + 1;
+  const barrios = [
+    "Palermo", "Recoleta", "Belgrano", "Puerto Madero", "Caballito", "Villa Urquiza", 
+    "San Telmo", "Almagro", "Colegiales", "Nuñez", "Flores", "Barracas", "Devoto", 
+    "Saavedra", "Balvanera", "Monserrat", "Retiro", "Chacarita", "Villa Crespo", "Liniers"
+  ];
+  const tipos = ["Combo", "Menú", "Promoción", "Pack", "Set"];
+  const categorias = ["Light", "Premium", "Tradicional", "Vegano", "Clásico", "Ejecutivo", "Gourmet", "Fitness", "Deluxe", "Express"];
+  
+  const nombreAleatorio = `${tipos[id % tipos.length]} ${categorias[id % categorias.length]} #${id}`;
+  const sucursalAleatoria = barrios[id % barrios.length];
+  const precioAleatorio = `$${(Math.floor(Math.random() * (8000 - 1200 + 1)) + 1200).toLocaleString('es-AR')}`;
+  const activoAleatorio = Math.random() > 0.3;
+
+  return {
+    id: id,
+    nombre: nombreAleatorio,
+    sucursal: sucursalAleatoria,
+    precio: precioAleatorio,
+    activo: activoAleatorio,
+    imagen: '/images/cover/cover-default.svg'
+  };
+});
 
 export default function MainDataTable() {
   const [data, setData] = useState(initialData);
   const [selectedItems, setSelectedItems] = useState<number[]>([]);
+  const [currentPage, setCurrentPage] = useState(1);
+  const itemsPerPage = 5; 
 
-  const toggleAll = () => {
-    if (selectedItems.length === data.length) setSelectedItems([]);
-    else setSelectedItems(data.map(item => item.id));
+  // Lógica de Paginado
+  const totalPages = Math.ceil(data.length / itemsPerPage);
+  const indexOfLastItem = currentPage * itemsPerPage;
+  const indexOfFirstItem = indexOfLastItem - itemsPerPage;
+  const currentItems = data.slice(indexOfFirstItem, indexOfLastItem);
+
+  // Generar rango de páginas con elipsis
+  const getPageRange = () => {
+    const range: (number | string)[] = [];
+    const delta = 1; 
+
+    for (let i = 1; i <= totalPages; i++) {
+      if (i === 1 || i === totalPages || (i >= currentPage - delta && i <= currentPage + delta)) {
+        range.push(i);
+      } else if (i === currentPage - delta - 1 || i === currentPage + delta + 1) {
+        range.push("...");
+      }
+    }
+    return range.filter((item, pos, self) => self.indexOf(item) === pos);
+  };
+
+  const toggleAllCurrentPage = () => {
+    const currentPageIds = currentItems.map(item => item.id);
+    const allSelected = currentPageIds.every(id => selectedItems.includes(id));
+
+    if (allSelected) {
+      setSelectedItems(prev => prev.filter(id => !currentPageIds.includes(id)));
+    } else {
+      setSelectedItems(prev => [...new Set([...prev, ...currentPageIds])]);
+    }
   };
 
   const toggleItem = (id: number) => {
@@ -53,40 +89,28 @@ export default function MainDataTable() {
     ));
   };
 
-    {/*Paginado*/}
-    const [currentPage, setCurrentPage] = useState(1);
-    const itemsPerPage = 5; 
-
-    {/*Lógica Paginado*/}
-    const indexOfLastItem = currentPage * itemsPerPage;
-    const indexOfFirstItem = indexOfLastItem - itemsPerPage;
-    const currentItems = data.slice(indexOfFirstItem, indexOfLastItem);
-    const totalPages = Math.ceil(data.length / itemsPerPage);
-
   return (
     <div className="relative overflow-hidden bg-white shadow-md dark:bg-gray-800 sm:rounded-lg border border-gray-200 dark:border-gray-700">
       <div className="overflow-x-auto">
         <table className="w-full text-sm text-left text-gray-500 dark:text-gray-400">
-          <thead className="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700  dark:text-gray-400 border-b border-gray-200 dark:border-gray-600">
+          <thead className="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400 border-b border-gray-200 dark:border-gray-600">
             <tr>
-                <th scope="col" className="p-4">
+              <th scope="col" className="p-4">
                 <div className="flex items-center">
-                    <input 
-                        id="checkbox-all-search" 
-                        type="checkbox" 
-                        checked={selectedItems.length === data.length}
-                        onChange={toggleAll}
-                        className="appearance-none w-4 h-4 border border-default-medium rounded-sm bg-neutral-secondary-medium focus:ring-2 focus:ring-primary/30 checked:bg-primary checked:border-primary transition-all duration-200 cursor-pointer"
-                    />
-                    <label htmlFor="checkbox-all-search" className="sr-only">Seleccionar todo</label>
+                  <input 
+                    type="checkbox" 
+                    checked={currentItems.length > 0 && currentItems.every(item => selectedItems.includes(item.id))}
+                    onChange={toggleAllCurrentPage}
+                    className="appearance-none w-4 h-4 border border-gray-300 rounded-sm bg-white focus:ring-2 focus:ring-primary/30 checked:bg-primary checked:border-primary transition-all duration-200 cursor-pointer"
+                  />
                 </div>
-                </th>
-                <th scope="col" className="px-4 py-3 text-center">Imagen</th>
-                <th scope="col" className="px-4 py-3">Nombre</th>
-                <th scope="col" className="px-4 py-3">Sucursal</th>
-                <th scope="col" className="px-4 py-3 text-center">Precio</th>
-                <th scope="col" className="px-4 py-3">Estado</th>
-                <th scope="col" className="px-4 py-3 text-center">Acciones</th>
+              </th>
+              <th scope="col" className="px-4 py-3 text-center">Imagen</th>
+              <th scope="col" className="px-4 py-3">Nombre</th>
+              <th scope="col" className="px-4 py-3">Sucursal</th>
+              <th scope="col" className="px-4 py-3 text-center">Precio</th>
+              <th scope="col" className="px-4 py-3">Estado</th>
+              <th scope="col" className="px-4 py-3 text-center">Acciones</th>
             </tr>
           </thead>
           <tbody>
@@ -96,34 +120,29 @@ export default function MainDataTable() {
                 className={`border-b border-gray-200 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600 transition-colors ${selectedItems.includes(item.id) ? 'bg-blue-50/50 dark:bg-primary/10' : ''}`}
               >
                 <td className="w-4 p-4">
-                    <div className="flex items-center">
-                        <input 
-                        id={`checkbox-table-search-${item.id}`} 
-                        type="checkbox" 
-                        checked={selectedItems.includes(item.id)}
-                        onChange={() => toggleItem(item.id)}
-                        className="appearance-none w-4 h-4 border border-default-medium rounded-sm bg-neutral-secondary-medium focus:ring-2 focus:ring-primary/30 checked:bg-primary checked:border-primary transition-all duration-200 cursor-pointer"
-                        />
-                        <label htmlFor={`checkbox-table-search-${item.id}`} className="sr-only">Seleccionar fila</label>
-                    </div>
+                  <input 
+                    type="checkbox" 
+                    checked={selectedItems.includes(item.id)}
+                    onChange={() => toggleItem(item.id)}
+                    className="appearance-none w-4 h-4 border border-gray-300 rounded-sm bg-white focus:ring-2 focus:ring-primary/30 checked:bg-primary checked:border-primary transition-all duration-200 cursor-pointer"
+                  />
                 </td>
                 <td className="px-4 py-3 text-center">
-                    <div className="flex items-center justify-center overflow-hidden">
-                        <Image
-                            src={item.imagen} 
-                            alt={item.nombre}
-                            width={40}
-                            height={40}
-                            className="object-cover w-10 h-10 rounded-lg bg-primary-soft/30 border border-primary-soft"
-                        />
-                    </div>
+                  <div className="flex items-center justify-center">
+                    <Image
+                      src={item.imagen} 
+                      alt={item.nombre}
+                      width={40}
+                      height={40}
+                      className="object-cover w-10 h-10 rounded-lg bg-gray-100 border border-gray-200"
+                    />
+                  </div>
                 </td>
                 <td className="px-4 py-3 font-medium text-gray-900 whitespace-nowrap dark:text-white">
                   {item.nombre}
                 </td>
                 <td className="px-4 py-3">{item.sucursal}</td>
                 <td className="px-4 py-3 text-center font-semibold">{item.precio}</td>
-                
                 <td className="px-4 py-3">
                   <div className="flex items-center gap-3">
                     <label className="relative inline-flex items-center cursor-pointer">
@@ -133,18 +152,17 @@ export default function MainDataTable() {
                         onChange={() => handleStatusChange(item.id)}
                         className="sr-only peer" 
                       />
-                      <div className="w-11 h-6 bg-gray-200 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-blue-300 dark:peer-focus:ring-blue-800 rounded-full peer dark:bg-gray-700 peer-checked:after:translate-x-full rtl:peer-checked:after:-translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-0.5 after:inset-s-0.5 after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all dark:border-gray-600 peer-checked:bg-blue-600"></div>
+                      <div className="w-11 h-6 bg-gray-200 peer-focus:outline-none rounded-full peer dark:bg-gray-700 peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-blue-600"></div>
                     </label>
-                    <span className={`px-2.5 py-0.5 rounded-full text-xs font-medium border transition-colors duration-300 ${
+                    <span className={`px-2.5 py-0.5 rounded-full text-xs font-medium border ${
                       item.activo 
-                      ? 'bg-green-100 text-green-800 border-green-200 dark:bg-green-900/30 dark:text-green-300 dark:border-green-800' 
-                      : 'bg-red-100 text-red-800 border-red-200 dark:bg-red-900/30 dark:text-red-300 dark:border-red-800'
+                      ? 'bg-green-100 text-green-800 border-green-200 dark:bg-green-900/30 dark:text-green-300' 
+                      : 'bg-red-100 text-red-800 border-red-200 dark:bg-red-900/30 dark:text-red-300'
                     }`}>
                       {item.activo ? 'Activo' : 'Inactivo'}
                     </span>
                   </div>
                 </td>
-
                 <td className="px-4 py-3">
                   <div className="flex items-center justify-center gap-2">
                     <ActionButton icon="eye" tooltip="Ver detalle" />
@@ -159,33 +177,37 @@ export default function MainDataTable() {
       </div>
 
       {/* Pagination Footer */}
-      <nav className="flex flex-col items-start justify-between p-4 space-y-3 md:flex-row md:items-center md:space-y-0 border-t border-gray-200 dark:border-gray-700" aria-label="Table navigation">
+      <nav className="flex flex-col items-start justify-between p-4 space-y-3 md:flex-row md:items-center md:space-y-0 border-t border-gray-200 dark:border-gray-700">
         <span className="text-sm font-normal text-gray-500 dark:text-gray-400">
           Mostrando <span className="font-semibold text-gray-900 dark:text-white">{indexOfFirstItem + 1}-{Math.min(indexOfLastItem, data.length)}</span> de <span className="font-semibold text-gray-900 dark:text-white">{data.length}</span>
         </span>
-        <ul className="inline-flex items-stretch -space-x-px">
+        <ul className="inline-flex items-center -space-x-px">
           <li>
             <button 
               onClick={() => setCurrentPage(prev => Math.max(prev - 1, 1))}
               disabled={currentPage === 1}
-              className="hover:cursor-pointer flex items-center justify-center h-full py-1.5 px-3 ml-0 text-gray-500 bg-white rounded-l-lg border border-gray-300 hover:bg-gray-100 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white disabled:opacity-50 disabled:cursor-not-allowed"
+              className="flex items-center justify-center h-9 px-3 text-gray-500 bg-white rounded-l-lg border border-gray-300 hover:bg-gray-100 dark:bg-gray-800 dark:border-gray-700 dark:hover:bg-gray-700 disabled:opacity-50 disabled:cursor-not-allowed cursor-pointer"
             >
-              <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 20 20"><path fillRule="evenodd" d="M12.707 5.293a1 1 0 010 1.414L9.414 10l3.293 3.293a1 1 0 01-1.414 1.414l-4-4a1 1 0 010-1.414l4-4a1 1 0 011.414 0z" clipRule="evenodd" /></svg>
+              <ChevronLeft size={18} />
             </button>
           </li>
           
-          {Array.from({ length: totalPages }, (_, i) => i + 1).map((page) => (
-            <li key={page}>
-              <button 
-                onClick={() => setCurrentPage(page)}
-                className={`hover:cursor-pointer px-3 py-2 leading-tight border transition-colors ${
-                  currentPage === page 
-                  ? 'text-white bg-primary border-primary dark:bg-primary_dark' 
-                  : 'text-gray-500 bg-white border-gray-300 hover:bg-gray-100 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700'
-                }`}
-              >
-                {page}
-              </button>
+          {getPageRange().map((page, index) => (
+            <li key={index}>
+              {page === "..." ? (
+                <span className="flex items-center justify-center h-9 px-3 leading-tight text-gray-500 bg-white border border-gray-300 dark:bg-gray-800 dark:border-gray-700">...</span>
+              ) : (
+                <button 
+                  onClick={() => setCurrentPage(Number(page))}
+                  className={`flex items-center justify-center h-9 px-3 leading-tight border transition-colors cursor-pointer ${
+                    currentPage === page 
+                    ? 'text-white bg-blue-600 border-blue-600 z-10' 
+                    : 'text-gray-500 bg-white border-gray-300 hover:bg-gray-100 dark:bg-gray-800 dark:border-gray-700 dark:hover:bg-gray-700'
+                  }`}
+                >
+                  {page}
+                </button>
+              )}
             </li>
           ))}
 
@@ -193,32 +215,32 @@ export default function MainDataTable() {
             <button 
               onClick={() => setCurrentPage(prev => Math.min(prev + 1, totalPages))}
               disabled={currentPage === totalPages}
-              className="hover:cursor-pointer flex items-center justify-center h-full py-1.5 px-3 text-gray-500 bg-white rounded-r-lg border border-gray-300 hover:bg-gray-100 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white disabled:opacity-50 disabled:cursor-not-allowed"
+              className="flex items-center justify-center h-9 px-3 text-gray-500 bg-white rounded-r-lg border border-gray-300 hover:bg-gray-100 dark:bg-gray-800 dark:border-gray-700 dark:hover:bg-gray-700 disabled:opacity-50 disabled:cursor-not-allowed cursor-pointer"
             >
-              <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 20 20"><path fillRule="evenodd" d="M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z" clipRule="evenodd" /></svg>
+              <ChevronRight size={18} />
             </button>
           </li>
         </ul>
       </nav>
     </div>
   );
-
 }
 
+// ActionButton Component
 type IconType = 'eye' | 'edit' | 'trash';
 
 function ActionButton({ icon, tooltip, variant = 'default', onClick }: { icon: IconType; tooltip: string; variant?: 'default' | 'danger'; onClick?: () => void; }) {
   const [showTooltip, setShowTooltip] = useState(false);
 
   const icons: Record<IconType, React.ReactNode> = {
-    eye: <Eye size={18} strokeWidth={2} />,
-    edit: <Edit3 size={18} strokeWidth={2} />,
-    trash: <Trash2 size={18} strokeWidth={2} />,
+    eye: <Eye size={18} />,
+    edit: <Edit3 size={18} />,
+    trash: <Trash2 size={18} />,
   };
 
   const colors = variant === 'danger' 
-    ? 'text-red-500 hover:bg-red-100 dark:hover:bg-red-900/20' 
-    : 'text-primary hover:bg-gray-200 dark:text-primary_dark dark:hover:bg-gray-700';
+    ? 'text-red-500 hover:bg-red-50 dark:hover:bg-red-900/20' 
+    : 'text-blue-600 hover:bg-blue-50 dark:text-blue-400 dark:hover:bg-blue-900/20';
 
   return (
     <div className="relative flex flex-col items-center">
@@ -226,7 +248,7 @@ function ActionButton({ icon, tooltip, variant = 'default', onClick }: { icon: I
         onClick={onClick}
         onMouseEnter={() => setShowTooltip(true)}
         onMouseLeave={() => setShowTooltip(false)}
-        className={`hover:cursor-pointer p-1.5 rounded-lg transition-colors duration-200 ${colors}`}
+        className={`p-1.5 rounded-lg transition-colors duration-200 cursor-pointer ${colors}`}
       >
         {icons[icon]}
       </button>
@@ -236,10 +258,9 @@ function ActionButton({ icon, tooltip, variant = 'default', onClick }: { icon: I
             initial={{ opacity: 0, y: 5 }}
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: 5 }}
-            className="absolute bottom-full mb-2 px-2 py-1 text-xs font-medium text-gray-900 bg-white rounded-md shadow-sm whitespace-nowrap z-50 pointer-events-none"
+            className="absolute bottom-full mb-2 px-2 py-1 text-[10px] font-bold text-white bg-gray-900 rounded shadow-sm whitespace-nowrap z-50 pointer-events-none"
           >
             {tooltip}
-            <div className="absolute top-full left-1/2 -translate-x-1/2 border-4 border-transparent border-t-white" />
           </motion.div>
         )}
       </AnimatePresence>
