@@ -1,4 +1,3 @@
-// src/app/layout.tsx (o donde esté tu DashboardLayout)
 "use client"; 
 import { useState } from "react";
 import Header from '@/components/Header';
@@ -7,7 +6,7 @@ import NotificationDrawer from '@/components/drawers/NotificationDrawer';
 
 export default function DashboardLayout({ children }: { children: React.ReactNode }) {
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
-  const [isDrawerOpen, setIsDrawerOpen] = useState(false); // <--- Este controla el Drawer
+  const [isDrawerOpen, setIsDrawerOpen] = useState(false);
   const [notifications, setNotifications] = useState([
     { mensaje: "Nueva actualización del Design System disponible." },
     { mensaje: "El cliente Opción 01 ha actualizado sus archivos." }
@@ -37,7 +36,7 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
         </main>
       </div>
 
-      {/* El Drawer ahora vive aquí, al final del DOM del Layout */}
+      {/* El Drawer */}
       <NotificationDrawer 
         isOpen={isDrawerOpen}
         onClose={() => setIsDrawerOpen(false)}
@@ -45,7 +44,7 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
         onDelete={deleteNotification}
       />
 
-      {/* Backdrop del Sidebar Mobile */}
+      {/* Backdrop Sidebar Mobile */}
       {isSidebarOpen && (
         <div 
           className="fixed inset-0 bg-gray-900/50 z-30 lg:hidden"
